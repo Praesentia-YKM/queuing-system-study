@@ -36,5 +36,9 @@ public class AdminController {
         if (queueKeys != null && !queueKeys.isEmpty()) redisTemplate.delete(queueKeys);
         Set<String> resultKeys = redisTemplate.keys("result:concert:*");
         if (resultKeys != null && !resultKeys.isEmpty()) redisTemplate.delete(resultKeys);
+        Set<String> tokenKeys = redisTemplate.keys("token:*");
+        if (tokenKeys != null && !tokenKeys.isEmpty()) redisTemplate.delete(tokenKeys);
+        Set<String> activeKeys = redisTemplate.keys("active:*");
+        if (activeKeys != null && !activeKeys.isEmpty()) redisTemplate.delete(activeKeys);
     }
 }
