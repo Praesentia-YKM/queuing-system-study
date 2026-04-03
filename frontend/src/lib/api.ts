@@ -1,4 +1,6 @@
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = typeof window !== 'undefined'
+    ? `http://${window.location.hostname}:8080/api`
+    : 'http://localhost:8080/api';
 
 export interface Concert {
     id: number;
@@ -23,6 +25,11 @@ export async function fetchConcerts(): Promise<Concert[]> {
 
 export async function fetchConcert(id: number): Promise<Concert> {
     const res = await fetch(`${API_BASE}/concerts/${id}`, { cache: 'no-store' });
+    return res.json();
+}
+
+export async function fetchReservedSeats(concertId: number): Promise<number[]> {
+    const res = await fetch(`${API_BASE}/concerts/${concertId}/reservations`, { cache: 'no-store' });
     return res.json();
 }
 

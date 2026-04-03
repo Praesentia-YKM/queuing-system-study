@@ -1,7 +1,6 @@
 package com.evolution.queue.api;
 
-import com.evolution.queue.domain.Concert;
-import com.evolution.queue.domain.ConcertRepository;
+import com.evolution.queue.domain.*;
 import com.evolution.queue.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +10,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/concerts")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class ConcertController {
 
     private final ConcertRepository concertRepository;
+    private final ReservationRepository reservationRepository;
     private final ReservationService reservationService;
 
     @GetMapping
@@ -29,6 +28,13 @@ public class ConcertController {
         Concert concert = concertRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("콘서트를 찾을 수 없습니다."));
         return ConcertDto.ConcertResponse.from(concert);
+    }
+
+    @GetMapping("/{id}/reservations")
+    public List<Integer> reservedSeats(@PathVariable Long id) {
+        return reservationRepository.findByConcertIdAndStatus(id, ReservationStatus.RESERVED).stream()
+                .map(Reservation::getSeatNo)
+                .toList();
     }
 
     @PostMapping("/{id}/reserve")
