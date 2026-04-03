@@ -12,6 +12,16 @@ public class ReservationService {
     private final ConcertRepository concertRepository;
     private final ReservationRepository reservationRepository;
 
+    private volatile Long activeConcertId;
+
+    public Long getActiveConcertId() {
+        return activeConcertId;
+    }
+
+    public void setActiveConcertId(Long concertId) {
+        this.activeConcertId = concertId;
+    }
+
     @Transactional
     public Reservation reserve(Long concertId, String userId, int seatNo) {
         Concert concert = concertRepository.findByIdForUpdate(concertId)

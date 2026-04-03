@@ -17,5 +17,10 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 server:
   port: 8080
