@@ -5,3 +5,7 @@ frontend/.next/
 .idea/
 *.iml
 .DS_Store
+node_modules/
+package-lock.json
+load-tests/k6-extracted/
+load-tests/k6.zip
